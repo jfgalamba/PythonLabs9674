@@ -1,0 +1,25 @@
+{
+    "folders": [
+        {
+            "path": ".."
+        }
+    ],
+    "settings": {
+        "editor.fontSize": 26,
+        "terminal.integrated.fontSize": 26,
+        "workbench.colorCustomizations": {
+            "titleBar.activeBackground": "#a23"
+        },
+        "python.analysis.diagnosticSeverityOverrides": {
+            "reportUnusedImport": "warning",
+            "reportUnusedClass": "warning"
+        },
+        // "editor.fontFamily": "Inconsolata, Menlo, Monaco, 'Courier New', monospace"
+    
+        // "[python]": {
+        //     "editor.defaultFormatter": "ms-python.black-formatter"
+        // }, 
+        // "editor.formatOnSaveMode": "file",
+        // "editor.formatOnSave": true,
+    }
+}
