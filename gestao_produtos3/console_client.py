@@ -20,14 +20,6 @@ PRODUCTS_CSV_PATH = 'products.csv'
 
 prods_collection: ProductCollection
 
-"""
-        ..  Git Tutorial for Beginners: Learn Git in 1 Hour: 
-            https://www.youtube.com/watch?v=8JJ101D3knE
-
-        ..  Git and GitHub - CS50W (Lesson 1)
-            https://www.youtube.com/watch?v=NcoBAfJ6l2Q
-"""
-
 def main():
     global prods_collection
     try:
