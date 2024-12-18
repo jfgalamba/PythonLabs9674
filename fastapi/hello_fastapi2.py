@@ -5,17 +5,25 @@ Manages a contact "list".
 from datetime import datetime
 
 from fastapi import FastAPI
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 
 
 app = FastAPI()
 
 
+# class Contact(BaseModel):
+#     id: int
+#     name: str
+#     email_addr: EmailStr
+#     last_changed: datetime = datetime.now()
+#     available: bool | None = None
+# #:
+
 class Contact(BaseModel):
-    id: int
-    name: str
-    email_addr: EmailStr
-    last_changed: datetime = datetime.now()
+    id: int                = Field(gt = 10_000, lt = 99_999, frozen = True)
+    name: str              = Field(min_length = 1, frozen = True)
+    email_addr: EmailStr   = Field(pattern = r'.+@mail\.com')
+    last_changed: datetime  = datetime.now()
     available: bool | None = None
 #:
 
@@ -32,7 +40,7 @@ async def index():
     return {"msg": "Retrieve contact information APP"}
 #:
 
-@app.get('/contact/{id}')
+@app.get('/contact/{contact_id}')
 async def get_contact_by_id(contact_id: int):
     if contact_id != the_contact.id:
         return None
@@ -46,6 +54,24 @@ async def update_contact(contact_id: int, contact: Contact):
         return None
     the_contact = contact
     the_contact.last_changed = datetime.now()
+#:
+
+# @app.put('/contact/email/{contact_id}')
+# async def update_email(contact_id: int, new_email_addr: str):
+#     if contact_id != the_contact.id:
+#         return None
+#     the_contact.email_addr = new_email_addr
+# #:
+
+class NewEmailAddr(BaseModel):
+    new_email_addr: EmailStr = Field(pattern = r'.+@mail\.com')
+#:
+
+@app.put('/contact/email/{contact_id}')
+async def update_email(contact_id: int, new_email_req: NewEmailAddr):
+    if contact_id != the_contact.id:
+        return None
+    the_contact.email_addr = new_email_req.new_email_addr
 #:
 
 """
