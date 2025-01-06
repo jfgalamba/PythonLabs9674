@@ -66,10 +66,8 @@ def load_contacts(file_path: str):
         return [Contact(**obj) for obj in data]
 #:
 
-
 # save_contacts("contacts.json", contacts)
 contacts = load_contacts("contacts.json")
-
 
 def find_contact_by(find_fn) -> tuple[int, Contact | None]:
     for i, contact in enumerate(contacts):
@@ -103,7 +101,6 @@ async def get_contact_by_id(contact_id: int):
     _, contact = find_contact_by_id(contact_id)
     return contact
 #:
-
 
 @app.get('/contact/email/{email_addr}')
 async def get_contact_by_email(email_addr: str):

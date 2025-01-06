@@ -5,8 +5,8 @@
         }
     ],
     "settings": {
-        "editor.fontSize": 24,
-        "terminal.integrated.fontSize": 24,
+        "editor.fontSize": 22,
+        "terminal.integrated.fontSize": 22,
         "workbench.colorCustomizations": {
             "titleBar.activeBackground": "#a23"
         },

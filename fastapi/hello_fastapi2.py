@@ -10,7 +10,6 @@ from pydantic import BaseModel, EmailStr, Field
 
 app = FastAPI()
 
-
 # class Contact(BaseModel):
 #     id: int
 #     name: str
