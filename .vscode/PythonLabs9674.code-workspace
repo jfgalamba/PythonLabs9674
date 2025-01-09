@@ -14,12 +14,21 @@
             "reportUnusedImport": "warning",
             "reportUnusedClass": "warning"
         },
-        // "editor.fontFamily": "Inconsolata, Menlo, Monaco, 'Courier New', monospace"
-    
-        // "[python]": {
-        //     "editor.defaultFormatter": "ms-python.black-formatter"
-        // }, 
-        // "editor.formatOnSaveMode": "file",
-        // "editor.formatOnSave": true,
+        "todohighlight.keywords": [
+            {
+                "text": "#:",
+                "color": "#000000",
+                "backgroundColor": "none",
+                "overviewRulerColor": "grey"
+            }
+        ]
+        // "todohighlight.keywords": [
+        //     {
+        //         "text": "ALBERTO", // without a defined regex pattern this is the string that will be matched
+        //         "color": "#FF0000",
+        //         "border": "none",
+        //         "isWholeLine": false
+        //     }
+        // ]
     }
 }

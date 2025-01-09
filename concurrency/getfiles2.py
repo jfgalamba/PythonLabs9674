@@ -4,9 +4,10 @@ Cliente síncrono (apesar do nome) da linha de comandos para descarregar
 ficheiros. Utiliza requests.
 """
 
-import requests
+import asyncio
 import httpx
-# import aiohttp
+import aiofiles
+
 
 DEFAULT_URLS = [
     'http://localhost:8000/4.jpg',
@@ -15,20 +16,22 @@ DEFAULT_URLS = [
     'http://localhost:8000/7.jpg',
 ]
 
-def get_file(url: str, file_path: str, session: requests.Session):
+
+async def get_file(url: str, file_path: str, client: httpx.AsyncClient):
     print(f"[+] STARTING download of {url}")
-    response = session.get(url)
-    with open(file_path, 'wb') as file:
-        for chunk in response.iter_content(1024):
-            file.write(chunk)
+    response = await client.get(url, timeout=None)
+    async with aiofiles.open(file_path, 'wb') as file:
+        async for chunk in response.aiter_bytes(1024):
+            await file.write(chunk)
+
         # Mais simples mas lê tudo para memória
         #
-        #   with open(path, 'wb') as file:
-        #       file.write(response.content)
+        #   async with aiofiles.open(path, 'wb') as file:
+        #       await file.write(await response.aread())
     print(f"[+] ENDING download of {url}")
 #:
 
-def get_files(urls_paths: dict[str, str]):
+async def get_files(urls_paths: dict[str, str]):
     """
     `url_paths` is a dictionary mapping urls to file paths. 
     Example:
@@ -37,12 +40,29 @@ def get_files(urls_paths: dict[str, str]):
             'http://api.cat.com/pics/xpt.gif': 'xpt.gif',
         }
     """
-    with requests.Session() as session:
-        for url, file_path in urls_paths.items():
-            get_file(url, file_path, session)
+    async with httpx.AsyncClient() as client:
+        # juntar todas as co-rotinas (ie, todas funções assíncronas),
+        # lançá-las em simultâneo e aguardar (await gather) por todas
+        coros = (
+            get_file(url, file_path, client) for url, file_path in urls_paths.items()
+        )
+        await asyncio.gather(*coros)
+
+        # Semelhante ao bloco anterior, mas criando uma tarefa por 
+        # cada co-rotina. O método anterior (gather) acaba por fazer 
+        # algo semelhante:
+        # 
+        # tasks = (
+        #     asyncio.create_task(get_file(url, file_path, client)) 
+        #     for url, file_path in urls_paths.items()
+        # )
+        # await asyncio.wait(tasks)
+
+        # for url, file_path in urls_paths.items():
+        #     await get_file(url, file_path, client)
 #:
 
-def main():
+async def main():
     from docopt import docopt
     doc = """
 Simple GET client using the requests HTTP library.
@@ -63,7 +83,7 @@ Options:
     if args['--files']:
         file_paths = args['--files'].split(',')
 
-    get_files(dict(zip(urls, file_paths)))
+    await get_files(dict(zip(urls, file_paths)))
 #:
 
 def file_path_from_url(url: str) -> str:
@@ -75,4 +95,4 @@ def file_path_from_url(url: str) -> str:
 #:
 
 if __name__ == '__main__':
-    main()
+    asyncio.run(main())
