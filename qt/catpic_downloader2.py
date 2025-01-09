@@ -2,6 +2,7 @@
 """
 Permite descarregar imagens da API pública "https://api.thecatapi.com".
 Esta versão utiliza o código gerado pelo designer da Qt.
+É também assíncrona com recurso a httpx
 """
 
 from pathlib import Path
@@ -10,8 +11,17 @@ import PySide6.QtCore as qtc
 import PySide6.QtWidgets as qtw
 from PySide6.QtWidgets import QMessageBox
 
+# Alternativa A
 import catpic_downloader_ui
 
+# Alternativa B
+# from PySide6.QtUiTools import loadUiType
+# DesignerUiClass, QBaseClass = loadUiType('catpic_downloader.ui')  # type: ignore
+
+# Alternativa B
+# class MainWindow(QBaseClass, DesignerUiClass):
+
+# Alternativa A
 class MainWindow(qtw.QWidget, catpic_downloader_ui.Ui_MainWindow):
     CAT_API_URL = "https://api.thecatapi.com/v1/images/search"
 
