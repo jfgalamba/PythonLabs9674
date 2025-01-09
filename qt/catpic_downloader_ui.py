@@ -97,7 +97,7 @@ class Ui_MainWindow(object):
         self.count_label.setText(QCoreApplication.translate("MainWindow", u"How many cats?", None))
         self.status_label.setText(QCoreApplication.translate("MainWindow", u"Status:", None))
         self.progress_label.setText(QCoreApplication.translate("MainWindow", u"IIdle. Click to start downloading", None))
-        self.download_button.setText(QCoreApplication.translate("MainWindow", u"Download", None))
+        self.download_button.setText(QCoreApplication.translate("MainWindow", u"Download!", None))
         self.stop_button.setText(QCoreApplication.translate("MainWindow", u"Stop", None))
         self.hello_button.setText(QCoreApplication.translate("MainWindow", u"Hello", None))
     # retranslateUi

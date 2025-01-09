@@ -10,6 +10,7 @@ from urllib.parse import urlsplit
 import PySide6.QtCore as qtc
 import PySide6.QtWidgets as qtw
 from PySide6.QtWidgets import QMessageBox
+
 import requests
 
 
@@ -105,13 +106,14 @@ class MainWindow(qtw.QWidget):
 
     def _download_cat_image(self, i: int) -> tuple[Path, int]:
         # Search
-        search_response = requests.get(MainWindow.CAT_API_URL)
-        search_response.raise_for_status()
+        # search_response = requests.get(MainWindow.CAT_API_URL)
+        # search_response.raise_for_status()
 
         # # Download
         # url = search_response.json()[0]['url']
         # url = "https://live.staticflickr.com/65535/49956396262_ef41c1d9b0_o.jpg"
-        url = "http://10.1.0.103:8000/data.bin"
+
+        url = f"http://localhost:8000/{i}.jpg"
         download_response = requests.get(url)
 
         # Save the contents of the image to a file
